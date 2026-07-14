@@ -1,5 +1,5 @@
-import { success } from "zod";
 import { prisma } from '../config/db.js';
+
 export const getProduct = async (req, res) => {
     try {
         const product = await prisma.product.findMany();

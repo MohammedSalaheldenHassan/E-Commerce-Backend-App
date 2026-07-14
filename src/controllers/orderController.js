@@ -1,5 +1,18 @@
 import {prisma} from '../config/db.js'
-export const createOreder = async (req,res)=>{
-    const {} = req.body;
+
+export const createOrder = async (req, res) => {
+
+    
+}
+export const getMyOrders = async (req, res) => {
+
+    
+}
+export const getOrderById = async (req, res) => {
+
+    
+}
+export const cancelOrder = async (req, res) => {
+
     
 }
