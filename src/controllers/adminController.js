@@ -173,9 +173,79 @@ export const deleteUser = async (req, res) => {
         })
     }
 }
+
 export const getAllOrders = async (req, res) => {
+    try {
+        const orders = await prisma.orders.findMany({
+            include: {
+                user: {
+                    select: {
+                        name: true,
+                        email: true
+                    }
+                },
+                order: {
+                    include: {
+                        product: true
+                    }
+                }
+            },
+            orderBy: {
+                created_at: "desc"
+            }
+        });
+        return res.status(200).json({
+            success: true,
+            data: orders
+        });
+    } catch (error) {
+        console.log(error);
+        return res.status(500).json({
+            success: false,
+            message: "Internal Server Error"
+        });
+    }
+};
 
-}
 export const updateOrderStatus = async (req, res) => {
-
-}
+    const { orderId } = req.params;
+    const { status } = req.body;
+    try {
+        const order = await prisma.orders.findUnique({
+            where: {
+                id: orderId
+            }
+        });
+        if (!order) {
+            return res.status(404).json({
+                success: false,
+                message: "Order not found"
+            });
+        }
+        if (!["PENDING", "SHIPPED", "DELIVERED"].includes(status)) {
+            return res.status(400).json({
+                success: false,
+                message: "Invalid status"
+            });
+        }
+        const updated = await prisma.orders.update({
+            where: {
+                id: orderId
+            },
+            data: {
+                status
+            }
+        });
+        return res.status(200).json({
+            success: true,
+            message: "Order status updated",
+            data: updated
+        });
+    } catch (error) {
+        console.log(error);
+        return res.status(500).json({
+            success: false,
+            message: "Internal Server Error"
+        });
+    }
+};

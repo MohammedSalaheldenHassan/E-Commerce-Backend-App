@@ -4,12 +4,12 @@ import { validation } from '../middlewares/validationMiddleware.js';
 import  {  registerValidation } from '../validators/authValidators.js';
 
 
-const route = express();
+const authRoute = express();
 
-route.post("/register" ,createAccount);
+authRoute.post("/register" ,createAccount);
 
-route.post("/login",  login);
+authRoute.post("/login",  login);
 
-route.post("/logout",  logout);
+authRoute.post("/logout",  logout);
 
-export default route;
+export default authRoute;

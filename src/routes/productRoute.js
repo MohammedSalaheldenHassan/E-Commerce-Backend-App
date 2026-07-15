@@ -5,15 +5,15 @@ import productSchema from '../validators/productValidators.js';
 import { authorize } from '../middlewares/productMiddleware.js';
 import { authMiddleware } from '../middlewares/authMiddleware.js';
 
-const route = express.Router();
+const productRoute = express.Router();
 
-route.use(express.json());
+productRoute.use(express.json());
 
-route.get("/", getProduct);
-route.post("/add",authMiddleware,authorize("admin"), createProduct);
-route.delete("/delete",(req,res)=>{});
-route.put("/update",(req,res)=>{});
-route.get("/category/:categoryId",getProductByCetagory);
-route.get("/:productId",productById);
+productRoute.get("/", getProduct);
+productRoute.post("/add",authMiddleware,authorize("admin"), createProduct);
+productRoute.delete("/delete",(req,res)=>{});
+productRoute.put("/update",(req,res)=>{});
+productRoute.get("/category/:categoryId",getProductByCetagory);
+productRoute.get("/:productId",productById);
 
-export default route;
+export default productRoute;
